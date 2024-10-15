@@ -2,15 +2,12 @@ package edu.farmingdale.bcs371_w7_demo_nav
 
 
 import android.content.Intent
-import android.transition.Fade
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +30,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -64,9 +60,47 @@ fun Navigation() {
 
         // ToDo 7: Add more nav screens here for the pizza party and gpa calculator
 
+        composable("pizza_party_screen") {
+            PizzaPartyScreen(navController)
+        }
+
+        composable("gpa_calculator_screen") {
+            GPACalculatorScreen(navController)
+        }
 
     }
+}
 
+@Composable
+fun PizzaPartyScreen(navController: NavController) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Welcome to the Pizza Party!", fontSize = 24.sp)
+        Button(onClick = { navController.navigate("first_screen") }) {
+            Text("Back to First Screen")
+        }
+    }
+}
+
+@Composable
+fun GPACalculatorScreen(navController: NavController) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("GPA Calculator", fontSize = 24.sp)
+        Button(onClick = { navController.navigate("first_screen") }) {
+            Text("first_screen")
+        }
+    }
 }
 
 @Composable
@@ -78,25 +112,22 @@ fun FirstScreen(navController: NavController) {
             Text(text = "First Screen")
 
             Button(onClick = { navController.navigate("second_screen") }) {
-                Text(text ="Go to Second Screen")
+                Text(text ="second_screen")
             }
 
         }
     }
 }
 
-
-
-
 @Composable
 fun SecondScreen(navController: NavController) {
     var sliderValue by remember { mutableStateOf(0.5f) }
-
+    var isCheckboxChecked by remember { mutableStateOf(true)}
     val context = LocalContext.current
     Column ( modifier = Modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally){
-        Slider(value = sliderValue, onValueChange = { sliderValue=it }, Modifier.fillMaxWidth())
+        Slider(value = sliderValue, onValueChange = { sliderValue=it }, Modifier.fillMaxWidth(), enabled = isCheckboxChecked)
 
         Text (fontSize = 20.sp, text = "Second Screen")
 
@@ -105,8 +136,8 @@ fun SecondScreen(navController: NavController) {
         }
 
         // ToDo 8: when the switch is off, disable the slider
-        Checkbox(checked = true, onCheckedChange = {  }, modifier = Modifier.padding(10.dp))
-
+        Checkbox(checked = isCheckboxChecked, onCheckedChange = { isChecked -> isCheckboxChecked = isChecked }, modifier = Modifier.padding(10.dp))
+        Text(text = if (isCheckboxChecked) "Enable slider" else "Disable slider")
     }
 
 }
