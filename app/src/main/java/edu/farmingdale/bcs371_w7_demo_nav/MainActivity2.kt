@@ -68,6 +68,7 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
 
         Button( onClick = {
             val newInt = Intent(Intent.ACTION_VIEW)
+            newInt.data = Uri.parse("www.webpage.edu")
             // ToDo 1: create implicit intent to open a web page or call a phone number
             context.startActivity(newInt)
         },
