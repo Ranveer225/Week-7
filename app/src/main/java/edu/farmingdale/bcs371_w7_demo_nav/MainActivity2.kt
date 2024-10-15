@@ -52,7 +52,7 @@ class MainActivity2 : ComponentActivity() {
 @Composable
 fun BasicOperations(name: String, modifier: Modifier = Modifier) {
     val  context = LocalContext.current
-
+    var isSwitchOn by remember { mutableStateOf(true) }
     Column {
         Spacer(modifier = Modifier.padding(50.dp))
         Button( onClick = {
@@ -60,8 +60,10 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
             newInt.setData(Uri.parse("geo:0,0?q=Farmingdale State College, NY"))
             context.startActivity(newInt)
         },
-            modifier= Modifier.padding(start = 40.dp, end = 40.dp)) {
+            modifier= Modifier.padding(start = 40.dp, end = 40.dp),
+        enabled = isSwitchOn) {
             Icon( imageVector = Icons.Default.LocationOn, contentDescription = "Location")
+            Spacer(modifier = Modifier.padding(10.dp))
             Text("Show me  Farmingdale")
         }
         HorizontalDivider(thickness = DividerDefaults.Thickness)
@@ -72,19 +74,22 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
             // ToDo 1: create implicit intent to open a web page or call a phone number
             context.startActivity(newInt)
         },
-            modifier= Modifier.padding(start = 40.dp, end = 40.dp)) {
+            modifier= Modifier.padding(start = 40.dp, end = 40.dp),
+        enabled = isSwitchOn) {
             Icon( imageVector = Icons.Default.Phone, contentDescription = "Phone")
             Text("Call Me")
         }
 
         HorizontalDivider(thickness = DividerDefaults.Thickness)
+        Spacer(modifier = Modifier.padding(10.dp))
 
         Button( onClick = {
             val intent = Intent(context, Activity2::class.java)
             context.startActivity(intent)
             // ToDo 2: create explicit intent to open a new activity
         },
-            modifier= Modifier.padding(start = 40.dp, end = 40.dp)) {
+            modifier= Modifier.padding(start = 40.dp, end = 40.dp),
+            enabled = isSwitchOn) {
             Icon( imageVector = Icons.Default.Info, contentDescription = "Phone")
             Text("Go To activity 2")
         }
@@ -92,11 +97,15 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
         // ToDo 3: Change the spacing between the icons and text to be 10dp
         // ToDo 4: Add a horizontal divider between the buttons
 
+        HorizontalDivider(thickness = DividerDefaults.Thickness)
+        Spacer(modifier = Modifier.padding(10.dp))
 
         // ToDo 5: This switch is not working fix it
         Switch(
-            checked = true,
-            onCheckedChange = {  },
+            checked = isSwitchOn,
+            onCheckedChange = { isChecked ->
+                isSwitchOn = isChecked
+            },
             modifier = Modifier.padding(10.dp),
         )
         // ToDo 6: when the switch is off, disable the buttons
