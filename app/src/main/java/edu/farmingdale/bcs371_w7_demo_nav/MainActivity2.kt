@@ -110,8 +110,6 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
         )
         // ToDo 6: when the switch is off, disable the buttons
     }
-
-
 }
 
 @Preview(showBackground = true)
