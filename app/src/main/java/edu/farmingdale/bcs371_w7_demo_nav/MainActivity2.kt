@@ -80,8 +80,9 @@ fun BasicOperations(name: String, modifier: Modifier = Modifier) {
         HorizontalDivider(thickness = DividerDefaults.Thickness)
 
         Button( onClick = {
+            val intent = Intent(context, Activity2::class.java)
+            context.startActivity(intent)
             // ToDo 2: create explicit intent to open a new activity
-            
         },
             modifier= Modifier.padding(start = 40.dp, end = 40.dp)) {
             Icon( imageVector = Icons.Default.Info, contentDescription = "Phone")
